@@ -20,7 +20,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   category: Category = new Category(0, '');
 
   constructor(
-    private _categorySerice: CategoryService,
+    private _categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder
@@ -63,7 +63,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   private loadCategory() {
     if (this.currentAction === 'edit') {
       this.route.paramMap.pipe(
-        switchMap(params => this._categorySerice.getById(+params.get('id')!))
+        switchMap(params => this._categoryService.getById(+params.get('id')!))
       )
       .subscribe({
         next: category => {
@@ -84,7 +84,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   private createCategory() {
     const category: Category = Object.assign( new Category(0, ''), this.categoryForm.value );
 
-    this._categorySerice.create(category)
+    this._categoryService.create(category)
     .subscribe({
       next: category => this.actionsForSuccess(category),
       error: () => this.actionsForError(category)
@@ -94,7 +94,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   private updateCategory() {
     const category: Category = Object.assign(new Category(0, ''), this.categoryForm.value);
 
-    this._categorySerice.update(category)
+    this._categoryService.update(category)
       .subscribe({
         next: category => this.actionsForSuccess(category),
         error: (error) => this.actionsForError(error)
