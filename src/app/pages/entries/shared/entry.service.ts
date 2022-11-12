@@ -1,87 +1,37 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError, mergeMap } from 'rxjs/operators';
+import { Injectable, Injector } from '@angular/core';
+import { Observable } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
+import { BaseResourceService } from 'src/app/shared/services/base-resource.service';
 import { CategoryService } from '../../categories/shared/category.service';
 import { Entry } from './entry.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EntryService {
-
-  private apiPath = 'api/entries';
+export class EntryService extends BaseResourceService<Entry> {
 
   constructor(
-    private _http: HttpClient,
-    private _categoryService: CategoryService
-  ) { }
-
-  getAll(): Observable<Entry[]> {
-    return this._http.get<Entry[]>(this.apiPath).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToEntries)
-    );
+    protected override injector: Injector,
+    private _categoryService: CategoryService,
+  ) {
+    super('api/entries', injector, Entry.fromJson);
   }
 
-  getById(id: number): Observable<Entry> {
-    const url = `${this.apiPath}/${id}`;
-    return this._http.get<Entry>(url).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToEntry)
-    );
+  override create(entry: Entry): Observable<Entry> {
+    return this.setCategoryAndSendToServer(entry, super.create.bind(this));
   }
 
-  create(entry: Entry): Observable<Entry> {
+  override update(entry: Entry): Observable<Entry> {
+    return this.setCategoryAndSendToServer(entry, super.update.bind(this));
+  }
+
+  private setCategoryAndSendToServer(entry: Entry, sendFn: (entry: Entry) => Observable<Entry>): Observable<Entry> {
     return this._categoryService.getById(entry.categoryId!).pipe(
       mergeMap(category => {
         entry.category = category;
-        return this._http.post<Entry>(this.apiPath, entry).pipe(
-          catchError(this.handleError),
-          map(this.jsonDataToEntry)
-        );
-      })
+        return sendFn(entry);
+      }),
+      catchError(this.handleError),
     );
   }
-
-  update(entry: Entry): Observable<Entry> {
-    const url = `${this.apiPath}/${entry.id}`;
-
-    return this._categoryService.getById(entry.categoryId!).pipe(
-      mergeMap(category => {
-        entry.category = category;
-        return this._http.put<Entry>(url, entry).pipe(
-          catchError(this.handleError),
-          map(() => entry)
-        );
-      })
-    );
-  }
-
-  delete(id?: number): Observable<void> {
-    const url = `${this.apiPath}/${id}`;
-    return this._http.delete(url).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  // #region Private METHODS
-  private jsonDataToEntries(jsonData: any[]): Entry[] {
-    const entries: Entry[] = [];
-    jsonData.forEach(entry => {
-      const entryAssigned = Object.assign(new Entry(), entry);
-      entries.push(entryAssigned);
-    });
-    return entries;
-  }
-
-  private jsonDataToEntry(jsonData: any): Entry {
-    return Object.assign(new Entry(), jsonData);
-  }
-
-  private handleError(error: any): Observable<any> {
-    console.log('Erro na requisição => ', error);
-    return throwError(() => error);
-  }
-  // #endregion
 }
