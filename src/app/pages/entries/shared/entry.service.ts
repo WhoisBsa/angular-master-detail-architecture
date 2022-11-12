@@ -58,7 +58,7 @@ export class EntryService {
     );
   }
 
-  delete(id: number): Observable<void> {
+  delete(id?: number): Observable<void> {
     const url = `${this.apiPath}/${id}`;
     return this._http.delete(url).pipe(
       catchError(this.handleError)
@@ -69,14 +69,14 @@ export class EntryService {
   private jsonDataToEntries(jsonData: any[]): Entry[] {
     const entries: Entry[] = [];
     jsonData.forEach(entry => {
-      const entryAssigned = Object.assign(new Entry(0), entry);
+      const entryAssigned = Object.assign(new Entry(), entry);
       entries.push(entryAssigned);
     });
     return entries;
   }
 
   private jsonDataToEntry(jsonData: any): Entry {
-    return Object.assign(new Entry(0), jsonData);
+    return Object.assign(new Entry(), jsonData);
   }
 
   private handleError(error: any): Observable<any> {

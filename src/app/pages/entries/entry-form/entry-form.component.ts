@@ -19,7 +19,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   pageTitle: string = '';
   serverErrorMessages: string[] | null = null;
   submittingForm: boolean = false;
-  entry: Entry = new Entry(0);
+  entry: Entry = new Entry();
   categories: Category[] = [];
 
   imaskConfig = {
@@ -123,7 +123,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private createEntry() {
-    const entry: Entry = Object.assign(new Entry(0, ''), this.entryForm.value);
+    const entry: Entry = Object.assign(new Entry(), this.entryForm.value);
 
     this._entryService.create(entry)
       .subscribe({
@@ -133,7 +133,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private updateEntry() {
-    const entry: Entry = Object.assign(new Entry(0, ''), this.entryForm.value);
+    const entry: Entry = Object.assign(new Entry(), this.entryForm.value);
 
     this._entryService.update(entry)
       .subscribe({

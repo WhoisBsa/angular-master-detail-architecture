@@ -17,7 +17,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   pageTitle: string = '';
   serverErrorMessages: string[] | null = null;
   submittingForm: boolean = false;
-  category: Category = new Category(0, '');
+  category: Category = new Category();
 
   constructor(
     private _categoryService: CategoryService,
@@ -82,7 +82,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private createCategory() {
-    const category: Category = Object.assign( new Category(0, ''), this.categoryForm.value );
+    const category: Category = Object.assign( new Category(), this.categoryForm.value );
 
     this._categoryService.create(category)
     .subscribe({
@@ -92,7 +92,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private updateCategory() {
-    const category: Category = Object.assign(new Category(0, ''), this.categoryForm.value);
+    const category: Category = Object.assign(new Category(), this.categoryForm.value);
 
     this._categoryService.update(category)
       .subscribe({
