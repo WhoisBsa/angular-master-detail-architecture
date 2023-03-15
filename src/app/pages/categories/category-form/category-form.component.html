@@ -16,6 +16,13 @@
   </div>
 </div>
 
+<app-page-header
+  [pageTitle]="pageTitle"
+  buttonText="< Voltar>"
+  buttonLink="/categories"
+  buttonClass="btn-light"
+></app-page-header>
+
 <form [formGroup]="resourceForm" (submit)="submitForm()">
   <div class="card">
     <div class="card-header">
