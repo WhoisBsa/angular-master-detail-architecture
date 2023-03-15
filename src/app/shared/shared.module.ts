@@ -5,6 +5,7 @@ import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.compon
 import { RouterModule } from '@angular/router';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { FormFieldErrorComponent } from './components/form-field-error/form-field-error.component';
+import { FromControlPipe } from './pipes/form-control.pipe';
 
 
 
@@ -12,7 +13,8 @@ import { FormFieldErrorComponent } from './components/form-field-error/form-fiel
   declarations: [
     BreadCrumbComponent,
     PageHeaderComponent,
-    FormFieldErrorComponent
+    FormFieldErrorComponent,
+    FromControlPipe,
   ],
   imports: [
     CommonModule,
@@ -24,9 +26,11 @@ import { FormFieldErrorComponent } from './components/form-field-error/form-fiel
     ReactiveFormsModule,
     RouterModule,
 
+
     BreadCrumbComponent,
     PageHeaderComponent,
     FormFieldErrorComponent,
+    FromControlPipe,
   ]
 })
 export class SharedModule { }

@@ -35,10 +35,7 @@
           <label for="name">Nome</label>
           <input type="text" class="form-control" id="name" formControlName="name">
 
-          <div class="text-danger" *ngIf="resourceForm.get('name')?.invalid && resourceForm.get('name')?.touched">
-            <small *ngIf="resourceForm.get('name')?.errors?.['required']">Dado obrigatório</small>
-            <small *ngIf="resourceForm.get('name')?.errors?.['minlength']">Deve ter no mínimo 2 caracteres</small>
-          </div>
+          <app-form-field-error [formControl]="resourceForm.get('name') | formControl"></app-form-field-error>
         </div>
         <div class="form-group col-md-8">
           <label for="description">Descrição</label>
