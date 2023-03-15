@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { FormFieldErrorComponent } from './components/form-field-error/form-field-error.component';
 import { FromControlPipe } from './pipes/form-control.pipe';
+import { ServerErrorMessageComponent } from './components/server-error-message/server-error-message.component';
 
 
 
@@ -15,6 +16,7 @@ import { FromControlPipe } from './pipes/form-control.pipe';
     PageHeaderComponent,
     FormFieldErrorComponent,
     FromControlPipe,
+    ServerErrorMessageComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { FromControlPipe } from './pipes/form-control.pipe';
     PageHeaderComponent,
     FormFieldErrorComponent,
     FromControlPipe,
+    ServerErrorMessageComponent,
   ]
 })
 export class SharedModule { }
