@@ -15,8 +15,8 @@
   <div class="card-body">
     <div class="form-row">
       <div class="form-group col-md">
-        <label for="year">Ano</label>
-        <input type="month" class="form-control">
+        <label for="month">Ano</label>
+        <input #month type="month" class="form-control">
       </div>
     </div>
 
@@ -32,21 +32,21 @@
   <div class="card text-center text-white bg-success">
     <div class="card-header">Total de Receitas</div>
     <div class="card-body">
-      <h3 class="card-title">1500</h3>
+      <h3 class="card-title">{{ totalRevenue }}</h3>
     </div>
   </div>
 
   <div class="card text-center text-white bg-danger">
     <div class="card-header">Total de Despesas</div>
     <div class="card-body">
-      <h3 class="card-title">200</h3>
+      <h3 class="card-title">{{ totalExpense }}</h3>
     </div>
   </div>
 
   <div class="card text-center text-white bg-info">
     <div class="card-header">Saldo</div>
     <div class="card-body">
-      <h3 class="card-title">1300</h3>
+      <h3 class="card-title">{{ balance }}</h3>
     </div>
   </div>
 </div>
@@ -55,10 +55,10 @@
 
 <div class="row mt-5 mb-4">
   <div class="col-md-6">
-    gráfico de receitas
+    <p-chart type="bar" [data]="revenueChartData"></p-chart>
   </div>
 
    <div class="col-md-6">
-    gráfico de despesas
+    <p-chart type="bar" [data]="expenseChartData"></p-chart>
   </div>
 </div>
